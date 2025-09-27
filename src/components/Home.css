@@ -1,0 +1,228 @@
+/* Home.css - class-based dark-mode (works with documentElement.classList.add('dark-mode')) */
+
+/* Light theme variables (default) */
+:root {
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --muted: #6c757d;
+  --text: #212529;
+  --accent: #0d6efd;
+  --surface: #f8f9fa;
+  --row-hover: rgba(13,110,253,0.03);
+  --table-border: rgba(0,0,0,0.06);
+}
+
+/* Dark theme variables applied when <html> has class dark-mode */
+.dark-mode {
+  --bg: #0b1220;
+  --card-bg: #0f1720;
+  --muted: #bfc7cf;
+  --text: #e6eef6;
+  --accent: #7c9cff;
+  --surface: #071026;
+  --row-hover: rgba(255,255,255,0.02);
+  --table-border: rgba(255,255,255,0.06);
+}
+
+/* Layout */
+.home-root {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+  color: var(--text);
+  min-height: calc(100vh - 80px);
+  padding-bottom: 40px;
+}
+
+/* Hero */
+.home-hero h1 { letter-spacing: 0.2px; margin-bottom: 0.25rem; }
+.home-subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Table container */
+.table-wrap .table-responsive {
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.03);
+}
+
+/* Table header and borders */
+.table-head {
+  background: transparent;
+  border-bottom: 1px solid var(--table-border);
+}
+.table th, .table td {
+  border-top: 0;
+  vertical-align: middle;
+}
+
+/* Row animation & hover */
+.task-row {
+  animation: rowFade 280ms ease both;
+  transition: background-color 180ms ease;
+}
+@keyframes rowFade {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.table-hover tbody tr:hover {
+  background: var(--row-hover);
+}
+
+/* Text / truncation */
+.task-title { font-weight: 600; color: var(--text); }
+.task-desc { color: var(--muted); max-width: 360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Status buttons */
+.status-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  border: 0;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  background: transparent;
+}
+.status-btn svg { opacity: .95; }
+.status-btn:active { transform: scale(.98); }
+.status-btn.inprogress { background: rgba(253, 186, 116, 0.12); color: #bb7a2b; }
+.status-btn.completed { background: rgba(110, 231, 183, 0.08); color: #0f5132; }
+
+/* Action buttons */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 6px;
+  transition: transform .12s ease, box-shadow .12s ease;
+  background: transparent;
+}
+/* ensure SVG icons always draw with currentColor and are visible */
+.action-btn svg {
+  stroke: currentColor;   /* use the button/element color */
+  fill: none;
+  opacity: 1 !important;  /* override accidental opacity rules */
+  transition: transform .12s ease, color .12s ease;
+}
+
+/* default action button color (light button) */
+.action-btn.btn-light {
+  color: var(--text);               /* ensures icon color contrasts with bg */
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* delete button (danger) — make icon white on red bg */
+.action-btn.btn-danger {
+  color: #fff;                      /* icon white */
+  background: #dc3545;
+  border: none;
+}
+
+/* small tweak so btn-light has visible background on dark mode */
+.dark-mode .action-btn.btn-light {
+  color: var(--text);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* if an icon still appears only on hover due to a hover-only rule, force visible */
+.action-btn,
+.action-btn * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* optional: make icon color a little softer on hover (micro interaction) */
+.action-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+}
+
+/* subtle hover */
+.action-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(2,6,23,0.06); }
+
+/* Empty state */
+.empty-spot { color: var(--muted); display: inline-flex; flex-direction: column; align-items: center; gap: .6rem; }
+
+/* Footer removed as requested; no rules */
+
+/* Accessibility / placeholder colors */
+.search-input::placeholder { color: rgba(0,0,0,0.45); }
+.dark-mode .search-input::placeholder { color: rgba(229,231,235,0.6); }
+
+/* Small screens */
+@media (max-width: 768px) {
+  .task-desc { display: none; }
+  .status-btn span { display: none; } /* only icon on mobile */
+  .table-wrap .table-responsive { box-shadow: none; }
+}
+/* Cards */
+.task-card {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--table-border);
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.08);
+}
+
+.task-card .card-title {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.task-card .card-text {
+  color: var(--muted);
+}
+
+/* Dark mode tweaks */
+.dark-mode .task-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* Card root */
+.task-card {
+  background: var(--card-bg) !important;
+  color: var(--text) !important;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.03);
+}
+
+/* Card title */
+.task-card .card-title {
+  color: var(--text) !important;
+  font-weight: 600;
+}
+
+/* Card description */
+.task-card .card-text {
+  color: var(--muted) !important;
+  margin-bottom: 0.5rem;
+}
+
+/* Card small text (like due date) */
+.task-card small {
+  color: var(--muted) !important;
+}
+
+/* Buttons inside card already handled */
+.status-btn,
+.action-btn {
+  transition: color 0.3s, background 0.3s;
+}

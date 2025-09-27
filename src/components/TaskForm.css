@@ -1,0 +1,44 @@
+/* TaskForm.css */
+
+/* Light theme (default) */
+:root {
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --text: #212529;
+  --muted: #6c757d;
+  --input-bg: #ffffff;
+  --input-text: #212529;
+}
+
+/* Dark theme */
+html.dark-mode {
+  --bg: #0b1220;
+  --card-bg: #0f1720;
+  --text: #e6eef6;
+  --muted: #bfc7cf;
+  --input-bg: #1a2230;
+  --input-text: #e6eef6;
+}
+
+.taskform-root {
+  background: var(--bg);
+  min-height: calc(100vh - 80px);
+  padding: 2rem 0;
+}
+
+.taskform-card {
+  background: var(--card-bg);
+  color: var(--text);
+  width: 100%;
+}
+
+/* Input fields */
+.form-control {
+  background: var(--input-bg);
+  color: var(--input-text);
+  width: 100%;
+}
+
+.form-control::placeholder {
+  color: var(--muted);
+}
